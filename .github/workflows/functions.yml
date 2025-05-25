@@ -1,0 +1,17 @@
+name: Functions
+on: push
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: printenv | grep '_FUNC'
+        env:
+          FORMAT_FUNC: ${{ format('{0}, {1}.', 'Thank you', 'world') }} # フォーマット
+          JOIN_FUNC: ${{ join(github.event.*.html_url, ', ') }} # カンマで結合
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${CONTEXT}"
+        env:
+          CONTEXT: ${{ toJSON(github) }} # githubコンテキストをJSON文字列でダンプ
+
